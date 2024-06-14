@@ -18,7 +18,7 @@ public class StripePaymentGateWayAdapter implements PaymentGateWay {
     @Value("${stripe.secret.key}")
     private String stripeSecretKey;
     @Override
-    public String generatePaymentLink(Long amount, String orderId) throws StripeException {
+    public String generatePaymentLink(Long amount, Long orderId) throws StripeException {
 //       System.out.println(stripeSecretKey);
         Stripe.apiKey = stripeSecretKey;
 
@@ -49,16 +49,16 @@ public class StripePaymentGateWayAdapter implements PaymentGateWay {
                                         .setQuantity(1L)
                                         .build()
                         )
-//                        .setAfterCompletion(
-//                                PaymentLinkCreateParams.AfterCompletion.builder()
-//                                        .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
-//                                        .setRedirect(
-//                                                PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
-//                                                        .setUrl("google.com/?orderId="+orderId).build()
-//
-//                                        )
-//                                        .build()
-//                        )
+                        .setAfterCompletion(
+                                PaymentLinkCreateParams.AfterCompletion.builder()
+                                        .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
+                                        .setRedirect(
+                                                PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
+                                                        .setUrl("https://meet.google.com/?orderId="+orderId).build()
+
+                                        )
+                                        .build()
+                        )
 
                         .build();
 
